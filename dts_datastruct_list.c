@@ -8,9 +8,7 @@
   ******************************************************************************
   */
 
-#include "dts_datastruct_list.h"
-
-#define list_t dts_datastruct_list_t
+#include <dts/datastruct/list.h>
 
 #define DEBUG
 #ifdef DEBUG

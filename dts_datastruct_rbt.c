@@ -1,11 +1,9 @@
-﻿#include "dts_datastruct_rbt.h"
+﻿#include <dts/datastruct/rbt.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
-#include "dts/datastruct/bt.h"
-#include "dts/datastruct/bst.h"
-
-#define rbt_t dts_datastruct_rbt_t
+#include <dts/datastruct/bt.h>
+#include <dts/datastruct/bst.h>
 
 static void left_rotate(rbt_t *x)
 {

@@ -1,9 +1,7 @@
-﻿#include "dts_datastruct_kdt.h"
+﻿#include <dts/datastruct/kdt.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <dts/algorithm/qsort.h>
-
-#define kdt_t dts_datastruct_kdt_t
+#include <dts/algorithm/qsort.h>s
 
 #define ARR(i) ((char *)mem + (i)*ele_sz)
 

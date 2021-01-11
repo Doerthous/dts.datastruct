@@ -1,10 +1,8 @@
-﻿#include "dts_datastruct_bst.h"
+﻿#include <dts/datastruct/bst.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "dts/datastruct/bt.h"
-
-#define bst_t dts_datastruct_bst_t
+#include <dts/datastruct/bt.h>
 
 static bst_t *bst_find_min(bst_t *bst)
 {

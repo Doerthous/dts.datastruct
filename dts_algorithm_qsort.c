@@ -1,4 +1,4 @@
-﻿#include "dts_algorithm_qsort.h"
+﻿#include <dts/algorithm/qsort.h>
 #include <stdlib.h>
 
 #define ARR(i) (((unsigned char *)base)+((i)*(ele_sz)))

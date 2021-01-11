@@ -1,11 +1,8 @@
-﻿#include "dts_datastruct_bt.h"
+﻿#include <dts/datastruct/bt.h>
 
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-#define bt_t dts_datastruct_bt_t
-#define bt_ext_t dts_datastruct_bt_ext_t
 
 int
 dts_datastruct_bt_preorder
