@@ -24,5 +24,15 @@
 #define list_find dts_datastruct_list_find
 #define list_traverse dts_datastruct_list_traverse
 
+#define list_foreach_remove(node) *node = (*node)->next
+#define list_foreach(type, node, list, do_something) \
+    for (type **node = (type **)&((list)->next); \
+        *node; ) { \
+        do_something \
+        if (*node) { \
+            node = (type **)&((*node)->next); \
+        } \
+    }
+
 
 #endif // LIST_H_

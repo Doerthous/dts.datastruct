@@ -1,4 +1,4 @@
-﻿#include <assert.h>
+#include <assert.h>
 #include <dts/datastruct/list.h>
 #include <stdio.h>
 
@@ -76,5 +76,19 @@ int main()
     list_traverse(&list, operator);
     assert(memcmp(result, opn, sizeof(int)*list_length(&list)) == 0);
 
+    list_foreach(struct test_node, node, &list, {
+        printf("%d ", (*node)->value);
+    });
+    printf("\n");
+    list_foreach(struct test_node, node, &list, {
+        if ((*node)->value == 9 || (*node)->value == 7 || (*node)->value == 1) {
+            list_foreach_remove(node);
+        }
+    });
+    list_foreach(struct test_node, node, &list, {
+        printf("%d ", (*node)->value);
+    });
+    printf("\n");
+    
     return 0;
 }

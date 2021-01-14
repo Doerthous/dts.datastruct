@@ -17,6 +17,11 @@ add_executable(list_test
     dts_datastruct_list.c
 )
 
+add_executable(list_foreach_test 
+    test/dts_datastruct_list_foreach_test.c 
+    dts_datastruct_list.c
+)
+
 add_executable(qsort_test 
     test/dts_algorithm_qsort_test.c 
     dts_algorithm_qsort.c
