@@ -24,12 +24,13 @@
 #define list_find dts_datastruct_list_find
 #define list_traverse dts_datastruct_list_traverse
 
-#define list_foreach_remove(node) *node = (*node)->next
+#define list_foreach_remove(node) list_foreach_flags = 1; *node = (*node)->next;
 #define list_foreach(type, node, list, do_something) \
     for (type **node = (type **)&((list)->next); \
         *node; ) { \
+        int list_foreach_flags = 0; \
         do_something \
-        if (*node) { \
+        if (*node && !list_foreach_flags) { \
             node = (type **)&((*node)->next); \
         } \
     }
