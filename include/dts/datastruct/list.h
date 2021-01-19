@@ -35,5 +35,6 @@
         } \
     }
 
+#define list_exists dts_datastruct_list_exists
 
 #endif // LIST_H_

@@ -185,4 +185,15 @@ void dts_datastruct_list_traverse(list_t * list, void (*operate)(void *node))
     }   
 }
 
+int list_exists(list_t * list, void *node)
+{
+    list_foreach(list_t, n, list, {
+        if ((*n) == node) {
+            return 1;
+        }
+    });
+
+    return 0;
+}
+
 /****************************** Copy right 2019 *******************************/

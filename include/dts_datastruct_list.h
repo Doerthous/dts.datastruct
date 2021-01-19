@@ -61,6 +61,8 @@ void *dts_datastruct_list_next(void *node);
 void *dts_datastruct_list_find(dts_datastruct_list_t * list, int (*match)(void *node, void *val), void *val);
 void dts_datastruct_list_traverse(dts_datastruct_list_t * list, void (*operate)(void *node));
 
+int dts_datastruct_list_exists(dts_datastruct_list_t * list, void *node);
+
 
 /**
  * Malloc support
