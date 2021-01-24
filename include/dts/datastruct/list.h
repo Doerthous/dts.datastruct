@@ -24,16 +24,31 @@
 #define list_find dts_datastruct_list_find
 #define list_traverse dts_datastruct_list_traverse
 
-#define list_foreach_remove(node) list_foreach_flags = 1; *node = (*node)->next;
-#define list_foreach(type, node, list, do_something) \
+#define list_foreach_flag_rm (1<<0)
+#define list_foreach_flag_continue (1<<1)
+#define list_foreach_remove(node) \
+    list_foreach_flags |= list_foreach_flag_rm; *node = (*node)->next;
+#define list_foreach(type, node, list, do_something) do \
+{ \
+    int list_foreach_flags = 0; \
     for (type **node = (type **)&((list)->next); \
         *node; ) { \
-        int list_foreach_flags = 0; \
-        do_something \
-        if (*node && !list_foreach_flags) { \
+        list_foreach_flags &= ~list_foreach_flag_rm; \
+        /* if it continue, move to next */ \
+        if (list_foreach_flags & list_foreach_flag_continue) { \
+            list_foreach_flags &= ~list_foreach_flag_continue; \
             node = (type **)&((*node)->next); \
         } \
-    }
+        /* we suppose it will continue */ \
+        list_foreach_flags |= list_foreach_flag_continue; \
+        do_something \
+        /* if we can get here, then it do not continue */ \
+        list_foreach_flags &= ~list_foreach_flag_continue; \
+        if (*node && !(list_foreach_flags & list_foreach_flag_rm)) { \
+            node = (type **)&((*node)->next); \
+        } \
+    } \
+} while (0)
 
 #define list_exists dts_datastruct_list_exists
 
