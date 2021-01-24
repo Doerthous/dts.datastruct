@@ -48,6 +48,7 @@ void dts_datastruct_list_push(dts_datastruct_list_t * list, void *node);
 void *dts_datastruct_list_pop(dts_datastruct_list_t * list);
 void dts_datastruct_list_enqueue(dts_datastruct_list_t * list, void *node);
 void *dts_datastruct_list_dequeue(dts_datastruct_list_t * list);
+void *dts_datastruct_list_queue_head(dts_datastruct_list_t *list);
 void dts_datastruct_list_append(dts_datastruct_list_t * list, void *node);
 
 void dts_datastruct_list_add(dts_datastruct_list_t * list, void *node);

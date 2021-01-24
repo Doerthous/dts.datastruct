@@ -80,6 +80,7 @@ int main()
         printf("%d ", (*node)->value);
     });
     printf("\n");
+    printf("remove 9, 7, 1\n");
     list_foreach(struct test_node, node, &list, {
         if ((*node)->value == 9 || (*node)->value == 7 || (*node)->value == 1) {
             list_foreach_remove(node);

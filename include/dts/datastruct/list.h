@@ -11,6 +11,7 @@
 #define list_pop dts_datastruct_list_pop
 #define list_enqueue dts_datastruct_list_enqueue
 #define list_dequeue dts_datastruct_list_dequeue
+#define list_queue_head dts_datastruct_list_queue_head
 #define list_append dts_datastruct_list_append
 
 #define list_add dts_datastruct_list_add

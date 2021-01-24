@@ -20,7 +20,7 @@
 #undef NULL
 #define NULL (void *)0
 
-void dts_datastruct_list_init(list_t * list)
+void list_init(list_t * list)
 {
     ASSERT(list != NULL);
 
@@ -28,12 +28,12 @@ void dts_datastruct_list_init(list_t * list)
 }
 
 
-void dts_datastruct_list_push(list_t * list, void *node)
+void list_push(list_t * list, void *node)
 {
-    dts_datastruct_list_add(list, node);
+    list_add(list, node);
 }
 
-void *dts_datastruct_list_pop(list_t * list)
+void *list_pop(list_t * list)
 {
     void *node = NULL;
 
@@ -48,71 +48,72 @@ void *dts_datastruct_list_pop(list_t * list)
     return node;
 }
 
-void dts_datastruct_list_enqueue(list_t * list, void *node)
+void list_enqueue(list_t * list, void *node)
 {
-    dts_datastruct_list_add(list, node);
+    list_add(list, node);
 }
 
-void *dts_datastruct_list_dequeue(list_t * list)
+void *list_dequeue(list_t * list)
 {
-    void *node = NULL;
+    void *head = NULL;
 
-    ASSERT(list != NULL);
-
-    if (list->next != NULL) {
-        while (list->next->next != NULL) {
-            list = list->next;
+    list_foreach(list_t, node, list, {
+        if ((*node)->next == NULL) {
+            head = (void *)(*node);
+            list_foreach_remove(node);
+            break;
         }
+    });
 
-        node = list->next;
-        list->next = NULL;
-    }
-
-    return node;
+    return head;
 }
 
-void dts_datastruct_list_append(list_t * list, void *node)
-{
-    ASSERT(list != NULL);
-    ASSERT(node != NULL);
 
-    while (list->next != NULL) {
-        if (list->next == node) { // node already in the list
-            return;
+void *list_queue_head(list_t *list)
+{
+    list_foreach(list_t, node, list, {
+        if ((*node)->next == NULL) {
+            return (void *)(*node);
         }
-        list = list->next;
-    }
+    });
 
-    list->next = node;
-    ((list_t *)node)->next = NULL; 
+    return NULL;
 }
 
-
-void dts_datastruct_list_add(list_t * list, void *node)
+void list_append(list_t * list, void *node)
 {
-    // make sure node is not in the list.    
-    dts_datastruct_list_remove(list, node);
-
-    ((list_t *)node)->next = list->next;    
-    list->next = node;    
-}
-
-void dts_datastruct_list_remove(list_t * list, void *node)
-{
-    ASSERT(list != NULL);
-    ASSERT(node != NULL);
-
-    while (list->next != NULL) {
-        if (list->next == node) {
-            list->next = ((list_t *)node)->next; 
-            return;
-        }
-        list = list->next;
+    if (!list_exists(list, node)) {
+        list_foreach(list_t, n, list, {
+            if ((*n)->next == NULL) {
+                (*n)->next = node;
+                ((list_t *)node)->next = NULL;
+                break;
+            }
+        });
     }
 }
 
 
-int dts_datastruct_list_length(list_t * list)
+void list_add(list_t * list, void *node)
+{
+    if (!list_exists(list, node)) {
+        ((list_t *)node)->next = list->next;    
+        list->next = node;
+    }
+}
+
+void list_remove(list_t * list, void *target)
+{
+    list_foreach(list_t, node, list, {
+        if ((*node) == target) {
+            list_foreach_remove(node);
+            break;
+        }
+    });
+}
+
+
+int list_length(list_t * list)
 {
     int i = 0;
 
@@ -126,16 +127,12 @@ int dts_datastruct_list_length(list_t * list)
     return i;
 }
 
-void *dts_datastruct_list_head(list_t * list)
+void *list_head(list_t * list)
 {
-    ASSERT(list != NULL);
-
     return list->next;
 }
-void *dts_datastruct_list_next(void *node)
+void *list_next(void *node)
 {
-    ASSERT(node != NULL);
-
     return node == NULL ? node : ((list_t *)node)->next;
 }
 
@@ -159,7 +156,7 @@ void dts_datastruct_list_delete(list_t * list)
 #endif
 
 
-void *dts_datastruct_list_find(list_t * list, int (*match)(void *node, void *val), void *val)
+void *list_find(list_t * list, int (*match)(void *node, void *val), void *val)
 {
     ASSERT(list != NULL);
     ASSERT(match != NULL);
@@ -174,13 +171,13 @@ void *dts_datastruct_list_find(list_t * list, int (*match)(void *node, void *val
     return NULL;
 }
 
-void dts_datastruct_list_traverse(list_t * list, void (*operate)(void *node))
+void list_traverse(list_t * list, void (*operate)(void *node))
 {
     ASSERT(list != NULL);
     ASSERT(operate != NULL);
 
     if (list->next) {
-        dts_datastruct_list_traverse(list->next, operate);
+        list_traverse(list->next, operate);
         operate(list->next);
     }   
 }
